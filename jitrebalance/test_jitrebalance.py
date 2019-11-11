@@ -5,7 +5,7 @@ import os
 import time
 
 
-plugin = os.path.join(os.getcwd(), 'jitrebalance.py')
+plugin = os.path.join(os.path.dirname(__file__), 'jitrebalance.py')
 
 
 def test_simple_rebalance(node_factory):
