@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-from pyln.client import Plugin, Millisatoshi
-from pprint import pprint
-from remote_pdb import RemotePdb
 from math import ceil
-import secrets
-import hashlib
+from pprint import pprint
+from pyln.client import Plugin, Millisatoshi
 import binascii
+import hashlib
+import secrets
 import time
 
 plugin = Plugin()
-pdb = RemotePdb('127.0.0.1', 4444)
 
 
 def get_circular_route(route, scid):
@@ -18,7 +16,6 @@ def get_circular_route(route, scid):
 
 @plugin.async_hook("htlc_accepted")
 def on_htlc_accepted(htlc, onion, plugin, request, **kwargs):
-    pdb.set_trace()
     plugin.log("Got an incoming HTLC htlc={}, onion={}".format(htlc, onion))
 
     # The HTLC might be a rebalance we ourselves initiated, better check
@@ -65,7 +62,10 @@ def on_htlc_accepted(htlc, onion, plugin, request, **kwargs):
         return
 
     # Need to consider who the funder is, since they are paying the fees.
-    funder = chan['msatoshi_to_us_max'] == chan['msatoshi_total']
+    # TODO If we are the funder we need to take the cost of an HTLC into
+    # account as well.
+    #funder = chan['msatoshi_to_us_max'] == chan['msatoshi_total']
+
     forward_amt = Millisatoshi(onion['per_hop_v0']['forward_amount'])
     incoming_amt = Millisatoshi(htlc['amount'])
     fee = incoming_amt - forward_amt
