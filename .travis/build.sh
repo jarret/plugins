@@ -45,4 +45,4 @@ fi
 # Collect libraries that the plugins need and install them
 find . -name requirements.txt -exec pip3 install --user -r {} \;
 
-pytest -vvv
+pytest -vvv -s
