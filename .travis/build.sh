@@ -37,7 +37,7 @@ git clone --recursive https://github.com/ElementsProject/lightning.git /tmp/ligh
 if [ ! -f "$CWD/dependencies/usr/local/bin/lightningd" ]; then
     (
 	cd /tmp/lightning && \
-	./configure --enable-developer --disable-valgrind --enable-experimental-features && \
+	./configure --enable-developer --disable-valgrind --disable-experimental-features && \
 	make -j 8 DESTDIR=dependencies/
     )
 fi
